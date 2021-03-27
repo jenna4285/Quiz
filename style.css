@@ -43,6 +43,6 @@ h1, #titleQuestion {
     flex-direction: column;
 }
 
-.response {
+#response {
     display: none;
 }
