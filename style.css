@@ -6,7 +6,6 @@
 header {
     display: flex;
     justify-content: space-between;
-    visibility: visible;
 }
 
 .timer {
@@ -19,7 +18,7 @@ body {
     align-content: center;
 }
 
-h1 {
+h1, #titleQuestion {
     align-self: center;
     margin: 10px;
 }
@@ -27,7 +26,7 @@ h1 {
 .mainpage {
     align-self: center;
     margin: 25px;
-    visibility: visible;
+    display: center;
 }
 
 .quizpage {
@@ -35,20 +34,15 @@ h1 {
     flex-direction: column;
     align-self: center;
     margin: 25px;
-    visibility: visible;
 }
 
-ul {
+#answerlist {
     padding: 0;
-    display: flex;
+    list-style: none;
+    display: none;
     flex-direction: column;
-    visibility: visible;
-}
-
-.answerlist {
-   margin: 15px;
 }
 
 .response {
-    visibility: visible;
+    display: none;
 }
