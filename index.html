@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+    <p class=viewscores>View Highscore</p>
+    <p class=timer>Timer</p>
+</header>
+
+<body>
+    <h1 class=titleQuestion>h1-titleQuestion</h1>
+<!-- this will only show upon init -->
+    <div class=mainpage>
+        <p class = intro> Try to answer the following questions within the time limit. <br> Keep in mind that incorrect answers will penalize your scoretime by ten seconds!  </p>
+        <div class=startbutton>  
+            <button id=start>Start Quiz!</button>
+        </div> 
+    </div>
+<!-- This is the content that will appear/change on question pages -->
+    <div class=quizpage>
+        <ul clss=answerlist>
+                <button class=A1></button>
+                <button class=A2></button>
+                <button class=A3></button>
+                <button class=A4></button>
+         </ul>
+        <h4 class=response>Correct</h4> 
+    </div> 
+<!-- This is the high score page that appears -->
+    <div class=highscore></div>
+    
+
+
+</body>
+
+<script src="script.js"></script>
+
+</html>
