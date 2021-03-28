@@ -209,58 +209,8 @@ function displayTimerCountdown () {
      }, 1000);  
 }
 
-
-var displayPlayer = localStorage.getItem("displayPlayer");
-var player = document.getElementById("player").innerHTML;
-console.log(player);
-
-function gameOver () {
-    if (timeLeft <= 0) {
-    setTimeout(function(){
-        response.remove();
-        answerlist.remove();
-        titleQuestion.innerText = "Quiz Complete";
-        intro.textContent="Your score is: "+ count + " correct answers out of 4";
-        titleQuestion.appendChild(intro);
-        enterInfor.style.display="flex";  
-    }, 3000);      
-    
-    
-    saveplayerbutton.addEventListener("click", function(event) {
-       event.preventDefault();
-       player.innerText="";
-       localStorage.setItem("displayPlayer", displayPlayer); 
-       console.log(player);
-    });
-    }
-}
-
-function allquestions () {
-    if (timeLeft > 0 ) {
-    setTimeout(function(){
-        response.remove();
-        answerlist.remove();
-        titleQuestion.innerText = "Quiz Complete";
-        intro.textContent="Your score is: "+ count + " correct answers out of 4 " + " with " + timeLeft + " seconds remaining!"; 
-        titleQuestion.appendChild(intro);
-        enterInfor.style.display="flex";  
-    }, 3000);      
-    
-    
-    saveplayerbutton.addEventListener("click", function(event) {
-       event.preventDefault();
-       player.innerText="";
-       localStorage.setItem("displayPlayer", displayPlayer); 
-       console.log(player);
-    });
- }
-}
-
 startButton.addEventListener("click", startGame);
 answer1.addEventListener("click", answer1);
 answer2.addEventListener("click", answer2);
 answer3.addEventListener("click", answer3);
 answer4.addEventListener("click", answer4);
-saveplayerbutton.addEventListener("click", saveplayerbutton);
-// init ();
-// displayTimerCountdown();
