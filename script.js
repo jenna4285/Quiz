@@ -11,8 +11,7 @@ var response = document.getElementById("response");
 var count = localStorage.getItem("count");
 var enterInfor = document.getElementById("enterinfo");
 var timeLeft =90;
-var saveplayerbutton = document.getElementById("saveplayer");
-var saveplayer = localStorage.getItem("playername");
+
 
 // function loadpage () {
 //     if (answerlist.style.display === "none") {
@@ -31,6 +30,7 @@ function startGame (event) {
     displayTimerCountdown();
     startButton.remove();
     intro.remove();
+    count = 0;
     titleQuestion.innerText = "What is the first name of the Deputy Headmistress of Hogwarts?" ;
     answerlist.style.display="flex";
     answer1.innerText = "Minerva";
@@ -62,6 +62,7 @@ function startGame (event) {
                 response.innerText = "Wrong"
                 question2 ();
                 }) 
+    return count;            
                 
 }
 
@@ -75,7 +76,7 @@ function question2 () {
     answer2.innerText = "Argus Filch";
     answer3.innerText = "Severus Snape";
     answer4.innerText = "Harry Potter";
-    
+    count=count;
     answer3.addEventListener("click", function(){
         count++;
         localStorage.setItem("count", count);
@@ -101,12 +102,14 @@ function question2 () {
                     answerlist.appendChild(response);
                     question3 ();
                     }) 
+    return count;                    
 }
 
 function question3 () {
     setTimeout(function(){
         response.remove(); 
     }, 1000);
+    count=count;
     response.style.display="hidden";
     titleQuestion.innerText = "Who hates Corned Beef Sandwiches?" ;
     answerlist.style.display="flex";
@@ -115,7 +118,7 @@ function question3 () {
     answer3.innerText = "Seamus Finnigan";
     answer4.innerText = "Vincent Crab";
     answer1.addEventListener("click", function(){
-        count++;
+        count+1;
         localStorage.setItem("count", count);
         response.innerText = "Correct";
         answerlist.appendChild(response);
@@ -139,7 +142,9 @@ function question3 () {
                     answerlist.appendChild(response);
                     question4 ();
                     }) 
+    return count;                    
 }
+
 
 function question4 () {
     setTimeout(function(){
@@ -157,26 +162,27 @@ function question4 () {
         localStorage.setItem("count", count);
         response.innerText = "Correct";
         answerlist.appendChild(response);
-        gameOver ();
+        allquestions ();
         })
         answer1.addEventListener("click", function(){
             timeLeft-=10;
             response.innerText = "Wrong";
                 answerlist.appendChild(response);
-            gameOver ();
+            allquestions ();
             }) 
             answer3.addEventListener("click", function(){
                 timeLeft-=10;
                 response.innerText = "Wrong";
                 answerlist.appendChild(response);
-                gameOver ();
+                allquestions ();
                 })   
                 answer4.addEventListener("click", function(){
                     timeLeft-=10;
                     response.innerText = "Wrong";
                     answerlist.appendChild(response);
-                    gameOver ();
+                    allquestions ();
                     }) 
+    return count;
 }
 
 // timer that counts down 90 seconds
@@ -186,9 +192,12 @@ function displayTimerCountdown () {
     timeLeft = 90;
 
     var timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
+        if (timeLeft >= 1) {
             displayTimer.textContent = timeLeft + " seconds remaining";
             timeLeft--;
+        // } else if (timeLeft > 1 && question4()){
+        //     allquestions();
+        //     event.preventDefault();
         } else {
             displayTimer.textContent = "Time is Up!";
             clearInterval(timeInterval);
@@ -197,30 +206,56 @@ function displayTimerCountdown () {
             // record win/lose
             // display scorepage
         } 
-     }, 1000);
-
+     }, 1000);  
 }
 
+var saveplayerbutton = document.getElementById("saveplayer");
+var playerDisplay = localStorage.getItem("player");
+var player = document.getElementById("player").innerHTML; 
+
 function gameOver () {
-    var playername = document.querySelector("#player").value;
+    setTimeout(function(){
+        response.remove();
+        answerlist.remove();
+        titleQuestion.innerText = "Quiz Complete";
+        intro.textContent="Your score is: "+ count + " correct answers out of 4";
+        titleQuestion.appendChild(intro);
+        enterInfor.style.display="flex";  
+    }, 3000);      
     
-    answerlist.remove();
-    response.remove();
-    titleQuestion.innerText = "Quiz Complete";
-    intro.textContent="Your score is: "+ count + " correct answers out of 4 " + " with " + timeLeft + " seconds remaining!"; 
-    titleQuestion.appendChild(intro);
-    enterInfor.style.display="flex";    
-    saveplayerbutton.addEventListener("click", function(event){
+    
+    saveplayerbutton.addEventListener("click", function(event) {
        event.preventDefault();
-       localStorage.setItem("playername", playername) 
+       player.innerText="";
+       localStorage.setItem("player", player.textContent); 
+       console.log(player);
     });
 }
 
+function allquestions () {
+    setTimeout(function(){
+        response.remove();
+        answerlist.remove();
+        titleQuestion.innerText = "Quiz Complete";
+        intro.textContent="Your score is: "+ count + " correct answers out of 4 " + " with " + timeLeft + " seconds remaining!"; 
+        titleQuestion.appendChild(intro);
+        enterInfor.style.display="flex";  
+    }, 3000);      
+    
+    
+    saveplayerbutton.addEventListener("click", function(event) {
+       event.preventDefault();
+       player.innerText="";
+       localStorage.setItem("player", player.textContent); 
+       console.log(player);
+    });
+}
 
 startButton.addEventListener("click", startGame);
 answer1.addEventListener("click", answer1);
 answer2.addEventListener("click", answer2);
 answer3.addEventListener("click", answer3);
 answer4.addEventListener("click", answer4);
+saveplayerbutton.addEventListener("click", saveplayerbutton);
 // init ();
 // displayTimerCountdown();
