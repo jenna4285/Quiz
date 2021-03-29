@@ -1,6 +1,12 @@
 * {
     font-family: verdana;
     font-weight: bold;
+    background-color: maroon;
+    color: goldenrod
+}
+
+#viewscores {
+    text-decoration: underline;
 }
 
 header {
@@ -50,4 +56,11 @@ h1, #titleQuestion {
 #enterinfo {
     display: none;
     align-items: center;
+}
+
+button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: goldenrod;
+    color: maroon;
 }

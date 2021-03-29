@@ -10,21 +10,9 @@ var answer4  = document.getElementById("A4")
 var response = document.getElementById("response");
 var count = localStorage.getItem("count");
 var enterInfor = document.getElementById("enterinfo");
-var saveplayerbutton = document.getElementById("saveplayer");
-var timeLeft =90;
-
-
-// function loadpage () {
-//     if (answerlist.style.display === "none") {
-//         answerlist.style.display = "block";
-//     } else {
-//         answerlist.style.display = "none";
-//     }
-// }
-
-// function init () {
-//     loadpage ();
-// }
+var saveplayerbutton = document.getElementById("initials");
+var viewScores = document.getElementById("viewscores");
+var timeLeft =60;
 
 function startGame (event) {  
     event.preventDefault()  
@@ -32,6 +20,7 @@ function startGame (event) {
     startButton.remove();
     intro.remove();
     count = 0;
+    
     titleQuestion.innerText = "What is the first name of the Deputy Headmistress of Hogwarts?" ;
     answerlist.style.display="flex";
     answer1.innerText = "Minerva";
@@ -67,7 +56,7 @@ function startGame (event) {
                 
 }
 
-function question2 () {
+function question2 (event) {
     setTimeout(function(){
         response.remove(); 
     }, 1000);
@@ -106,7 +95,7 @@ function question2 () {
     return count;                    
 }
 
-function question3 () {
+function question3 (event) {
     setTimeout(function(){
         response.remove(); 
     }, 1000);
@@ -146,7 +135,7 @@ function question3 () {
     return count;                    
 }
 
-function question4 () {
+function question4 (event) {
     setTimeout(function(){
         response.remove(); 
     }, 1000);
@@ -162,25 +151,25 @@ function question4 () {
         localStorage.setItem("count", count);
         response.innerText = "Correct";
         answerlist.appendChild(response);
-        allquestions ();
+        gameOver ();
         })
         answer1.addEventListener("click", function(){
             timeLeft-=10;
             response.innerText = "Wrong";
-                answerlist.appendChild(response);
-            allquestions ();
+            answerlist.appendChild(response);
+            gameOver ();
             }) 
             answer3.addEventListener("click", function(){
                 timeLeft-=10;
                 response.innerText = "Wrong";
                 answerlist.appendChild(response);
-                allquestions ();
+                gameOver ();
                 })   
                 answer4.addEventListener("click", function(){
                     timeLeft-=10;
                     response.innerText = "Wrong";
                     answerlist.appendChild(response);
-                    allquestions ();
+                    gameOver ();
                     }) 
     return count;
 }
@@ -189,7 +178,7 @@ function question4 () {
 function displayTimerCountdown () {
     // declare starting time
     event.preventDefault()
-    timeLeft = 90;
+    timeLeft = 60;
 
     var timeInterval = setInterval(function () {
         if (timeLeft >= 1) {
@@ -209,52 +198,46 @@ function displayTimerCountdown () {
      }, 1000);  
 }
 
+var playerobject = [];
+const initialsButton = document.getElementById("initials");
+const player = document.getElementById("player");
 
-var displayPlayer = localStorage.getItem("displayPlayer");
-var player = document.getElementById("player").innerHTML;
-console.log(player);
-
-function gameOver () {
-    if (timeLeft <= 0) {
+function gameOver (event) {
     setTimeout(function(){
-        response.remove();
-        answerlist.remove();
+        // response.remove();
+        answerlist.style.display = "none";
         titleQuestion.innerText = "Quiz Complete";
-        intro.textContent="Your score is: "+ count + " correct answers out of 4";
+        intro.textContent="Your score is: "+ count + " " + " correct answers out of 4";
         titleQuestion.appendChild(intro);
         enterInfor.style.display="flex";  
-    }, 3000);      
+    }, 500);
     
+    initialsButton.addEventListener("click", function() {
+        playerobject.push(player.value);
+        console.log(playerobject);
+        localStorage.setItem("playerobject", JSON.stringify (playerobject));
+        highscore();
+    })
+      
+}
     
-    saveplayerbutton.addEventListener("click", function(event) {
-       event.preventDefault();
-       player.innerText="";
-       localStorage.setItem("displayPlayer", displayPlayer); 
-       console.log(player);
-    });
-    }
+function highscore () {
+    setTimeout(function(){  
+        answerlist.style.display = "none";
+        enterInfor.remove();    
+        var playerInitials = JSON.parse(localStorage.getItem("playerobject"));
+        titleQuestion.innerText = "High Scores:";
+        titleQuestion.appendChild(intro);
+        localStorage.getItem(playerInitials);
+        localStorage.getItem(count);
+        intro.innerText = "Previous Score: " + playerInitials[0] + " score " + count;
+        startButton.innerText = "Play Again";
+        intro.appendChild(startButton);
+        startButton.style.display="flex"
+    }, 1000);
+    
 }
 
-function allquestions () {
-    if (timeLeft > 0 ) {
-    setTimeout(function(){
-        response.remove();
-        answerlist.remove();
-        titleQuestion.innerText = "Quiz Complete";
-        intro.textContent="Your score is: "+ count + " correct answers out of 4 " + " with " + timeLeft + " seconds remaining!"; 
-        titleQuestion.appendChild(intro);
-        enterInfor.style.display="flex";  
-    }, 3000);      
-    
-    
-    saveplayerbutton.addEventListener("click", function(event) {
-       event.preventDefault();
-       player.innerText="";
-       localStorage.setItem("displayPlayer", displayPlayer); 
-       console.log(player);
-    });
- }
-}
 
 startButton.addEventListener("click", startGame);
 answer1.addEventListener("click", answer1);
@@ -262,5 +245,6 @@ answer2.addEventListener("click", answer2);
 answer3.addEventListener("click", answer3);
 answer4.addEventListener("click", answer4);
 saveplayerbutton.addEventListener("click", saveplayerbutton);
+viewScores.addEventListener("click", highscore);
 // init ();
 // displayTimerCountdown();
