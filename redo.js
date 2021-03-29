@@ -10,21 +10,8 @@ var answer4  = document.getElementById("A4")
 var response = document.getElementById("response");
 var count = localStorage.getItem("count");
 var enterInfor = document.getElementById("enterinfo");
-var saveplayerbutton = document.getElementById("saveplayer");
+var saveplayerbutton = document.getElementById("initials");
 var timeLeft =90;
-
-
-// function loadpage () {
-//     if (answerlist.style.display === "none") {
-//         answerlist.style.display = "block";
-//     } else {
-//         answerlist.style.display = "none";
-//     }
-// }
-
-// function init () {
-//     loadpage ();
-// }
 
 function startGame (event) {  
     event.preventDefault()  
@@ -162,25 +149,25 @@ function question4 () {
         localStorage.setItem("count", count);
         response.innerText = "Correct";
         answerlist.appendChild(response);
-        allquestions ();
+        gameOver ();
         })
         answer1.addEventListener("click", function(){
             timeLeft-=10;
             response.innerText = "Wrong";
-                answerlist.appendChild(response);
-            allquestions ();
+            answerlist.appendChild(response);
+            gameOver ();
             }) 
             answer3.addEventListener("click", function(){
                 timeLeft-=10;
                 response.innerText = "Wrong";
                 answerlist.appendChild(response);
-                allquestions ();
+                gameOver ();
                 })   
                 answer4.addEventListener("click", function(){
                     timeLeft-=10;
                     response.innerText = "Wrong";
                     answerlist.appendChild(response);
-                    allquestions ();
+                    gameOver ();
                     }) 
     return count;
 }
@@ -209,8 +196,58 @@ function displayTimerCountdown () {
      }, 1000);  
 }
 
+var playerobject = [];
+const button = document.getElementById("initials");
+const player = document.getElementById("player");
+
+function gameOver () {
+    setTimeout(function(){
+        // response.remove();
+        answerlist.remove();
+        titleQuestion.innerText = "Quiz Complete";
+        intro.textContent="Your score is: "+ count + " correct answers out of 4";
+        titleQuestion.appendChild(intro);
+        enterInfor.style.display="flex";  
+    }, 3000);
+    
+    button.addEventListener("click", function() {
+        playerobject.push(player.value);
+        console.log(playerobject);
+        localStorage.setItem("playerobject", JSON.stringify (playerobject));
+        highscore();
+        return playerobject;
+    })
+      return count;
+      
+}
+    
+    // highscore();
+
+
+function highscore () {
+    event.preventDefault();
+    setTimeout(function(){
+        enterInfor.remove();
+        
+        var playerInitials = JSON.parse(localStorage.getItem("playerobject"));
+        console.log("This Should be Displaying", playerInitials);
+        titleQuestion.innerText = "High Scores: " + count + playerInitials[0];
+        response.innerText = "1) " + playerInitials[0];
+        localStorage.getItem(count);
+        console.log("this should show", count);
+        response.innerText = "1)" + count;
+    }, 3000);
+
+}
+
+
+
+
 startButton.addEventListener("click", startGame);
 answer1.addEventListener("click", answer1);
 answer2.addEventListener("click", answer2);
 answer3.addEventListener("click", answer3);
 answer4.addEventListener("click", answer4);
+saveplayerbutton.addEventListener("click", saveplayerbutton);
+// init ();
+// displayTimerCountdown();
