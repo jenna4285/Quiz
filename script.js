@@ -1,6 +1,7 @@
 var displayTimer = document.getElementById("timer");
 var titleQuestion = document.getElementById("titleQuestion");
 var startButton = document.getElementById ("start");
+var replayButton = document.getElementById ("replay");
 var intro = document.getElementById("intro");
 var answerlist = document.getElementById("answerlist");
 var answer1  = document.getElementById("A1")
@@ -151,24 +152,28 @@ function question4 (event) {
         localStorage.setItem("count", count);
         response.innerText = "Correct";
         answerlist.appendChild(response);
+        answerlist.disabled = true;
         gameOver ();
         })
         answer1.addEventListener("click", function(){
             timeLeft-=10;
             response.innerText = "Wrong";
             answerlist.appendChild(response);
+            answerlist.disabled = true;
             gameOver ();
             }) 
             answer3.addEventListener("click", function(){
                 timeLeft-=10;
                 response.innerText = "Wrong";
                 answerlist.appendChild(response);
+                answerlist.disabled = true;
                 gameOver ();
                 })   
                 answer4.addEventListener("click", function(){
                     timeLeft-=10;
                     response.innerText = "Wrong";
                     answerlist.appendChild(response);
+                    answerlist.disabled = true;
                     gameOver ();
                     }) 
     return count;
@@ -222,6 +227,7 @@ function gameOver (event) {
 }
     
 function highscore () {
+    
     setTimeout(function(){  
         answerlist.style.display = "none";
         enterInfor.remove();    
@@ -230,16 +236,25 @@ function highscore () {
         titleQuestion.appendChild(intro);
         localStorage.getItem(playerInitials);
         localStorage.getItem(count);
-        intro.innerText = "Previous Score: " + playerInitials[0] + " score " + count;
+        intro.innerText = "Your Score: " + playerInitials[0] + " score " + count;
         startButton.innerText = "Play Again";
-        intro.appendChild(startButton);
-        startButton.style.display="flex"
+        intro.appendChild(replayButton);
+        replayButton.style.display="flex"
+        var clearButton = document.createElement('button');
+        clearButton.textContent="Clear Scores";
+        clearButton.addEventListener("click", function() {
+            localStorage.removeItem("playerobject");
+            localStorage.removeItem("count");
+            intro.innerText = "";
+        })
+        intro.appendChild(clearButton);
     }, 1000);
-    
 }
 
 
+
 startButton.addEventListener("click", startGame);
+replayButton.addEventListener("click", function (){location.reload()});
 answer1.addEventListener("click", answer1);
 answer2.addEventListener("click", answer2);
 answer3.addEventListener("click", answer3);

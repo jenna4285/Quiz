@@ -5,6 +5,10 @@
     color: goldenrod
 }
 
+.hide {
+    display: none;
+}
+
 #viewscores {
     text-decoration: underline;
 }
@@ -63,4 +67,8 @@ button {
     -moz-appearance: none;
     background-color: goldenrod;
     color: maroon;
+}
+
+#replay {
+    display: none;
 }
